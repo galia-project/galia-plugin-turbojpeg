@@ -1,0 +1,22 @@
+name: Test
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      # Helps setup-java cache downloads get unstuck
+      SEGMENT_DOWNLOAD_TIMEOUT_MINS: 2
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v2
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 22
+          cache: maven
+      - name: Build
+        env:
+          ACTIONS_PAT: ${{ secrets.ACTIONS_PAT }}
+        run: docker build -t galia-plugin-turbojpeg:test --build-arg github_pat=$ACTIONS_PAT -f docker/Linux_x86-64_JDK22/Dockerfile .
+      - name: Run
+        run: docker run galia-plugin-turbojpeg:test

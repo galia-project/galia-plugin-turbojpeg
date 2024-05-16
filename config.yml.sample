@@ -1,0 +1,59 @@
+##
+# This file contains all of the configuration keys used by TurboJPEGDecoder
+# and TurboJPEGEncoder. Simply copy them into your main application
+# configuration.
+#
+# Some of the documentation comments are copied directly from the TurboJPEG
+# API documentation.
+
+#----------------------------------------
+# TurboJPEGDecoder
+#----------------------------------------
+
+# See the documentation of `encoder.TurboJPEGEncoder.fast_dct`.
+decoder.TurboJPEGDecoder.fast_dct: false
+
+# If false, smooth upsampling will be used when decompressing a JPEG image
+# that was compressed using chrominance subsampling. This creates a smooth
+# transition between neighboring chrominance components in order to reduce
+# upsampling artifacts in the decompressed image.
+# If true, the fastest chrominance upsampling algorithm available will be
+# used, which may combine upsampling with color conversion.
+decoder.TurboJPEGDecoder.fast_upsampling: false
+
+#----------------------------------------
+# TurboJPEGEncoder
+#----------------------------------------
+
+# Quality factor (1-100).
+encoder.TurboJPEGEncoder.quality: 50
+
+# Progressive entropy coding will generally improve compression relative to
+# baseline entropy coding, but it will reduce compression and decompression
+# performance considerably.
+encoder.TurboJPEGEncoder.progressive: false
+
+# If true, the fastest DCT/IDCT algorithm available will be used.
+# If false, the most accurate DCT/IDCT algorithm available will be used.
+#
+# * The "fast" and "accurate" DCT/IDCT algorithms perform similarly on modern
+#   x86/x86-64 CPUs that support AVX2 instructions.
+# * The "fast" algorithm is generally only about 5-15% faster than the
+#   "accurate" algorithm on other types of CPUs.
+# * The difference in accuracy between the "fast" and "accurate" algorithms is
+#   the most pronounced at JPEG quality levels above 90 and tends to be more
+#   pronounced with decompression than with compression.
+# * The "fast" algorithm degrades and is not fully accelerated for JPEG
+#   quality levels above 97, so it will be slower than the "accurate"
+#   algorithm.
+encoder.TurboJPEGEncoder.fast_dct: false
+
+# When enabled, optimal Huffman tables will be computed. Otherwise, the
+# default Huffman tables will be used.
+# Optimized baseline entropy coding will improve compression slightly
+# (generally 5% or less), but it will reduce compression performance
+# considerably.
+encoder.TurboJPEGEncoder.optimize_coding: false
+
+# Chrominance subsampling for color images (444, 422, 420, 440, 411, 441).
+encoder.TurboJPEGEncoder.subsampling: 444
